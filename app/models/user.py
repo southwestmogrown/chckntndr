@@ -2,13 +2,6 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
-statuses = db.Table(
-    "statuses",
-    db.Column("status_id", db.Integer, primary_key=True),
-    db.Column("status", db.String(15), nullable=False, unique=True)
-)
-
-
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'

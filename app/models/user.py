@@ -2,6 +2,15 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
+friends = db.Table(
+    "friends",
+    db.Model.metadata,
+    db.Column("user_id", db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column("friend_id", db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
+)
+
+if environment == 'production':
+    friends.schema = SCHEMA
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -13,6 +22,23 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+
+    user_friend_list = db.relationship(
+        "User",
+        secondary="friends",
+        primaryjoin=friends.c.friend_id == id,
+        secondaryjoin=friends.c.user_id == id,
+        back_populates="friends_friend_list",
+
+    )
+
+    friends_friend_list = db.relationship(
+        "User",
+        secondary="friends",
+        primaryjoin=friends.c.user_id == id,
+        secondaryjoin=friends.c.friend_id == id,
+        back_populates="user_friend_list"
+    )
 
     @property
     def password(self):
@@ -29,5 +55,5 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'friends': [friend.id for friend in self.user_friend_list]
         }

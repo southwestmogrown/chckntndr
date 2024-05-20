@@ -1,1 +1,10 @@
 /* TODO: Add sitewide styles */
+@font-face {
+  font-family: Caveat;
+  src: url('../Caveat-VariableFont_wght.ttf');
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}

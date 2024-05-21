@@ -6,8 +6,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: rgb(231, 3, 49);
-  background-color: rgba(204, 204, 0, 0.671);
+  color: var(--primary-red);
+  background-color: var(--primary-yellow);
 }
 
 .landing-container > h1 {
@@ -34,8 +34,8 @@
   font-family: Caveat;
   font-weight: bolder;
   font-size: 26px;
-  color: rgb(231, 3, 49);
-  background-color: rgb(240, 174, 7);
+  color: var(--primary-red);
+  background-color: var(--secondary-yellow);
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.671);
   transition: 0.15s
 }

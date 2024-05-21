@@ -1,7 +1,4 @@
-:root {
-  --primary-red: rgb(231, 3, 49);
-  --primary-yellow: rgb(240, 174, 7);
-}
+
 
 .login-container {
   display: flex;
@@ -68,5 +65,5 @@
 .login-btn:hover {
   box-shadow: inset -2px -3px 5px rgba(0, 0, 0, 0.5), inset 2px 3px 5px rgba(0, 0, 0, 0.5);
   transition: .25s;
-  color: rgba(136, 4, 30, 0.795);
+  color: var(--secondary-red);
 }

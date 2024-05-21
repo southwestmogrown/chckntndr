@@ -1,0 +1,20 @@
+body {
+  background-color: var(--secondary-yellow);
+}
+
+.homepage-container {
+  padding-top: 35px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: Caveat;
+}
+
+.homepage-container > h1 {
+  font-size: 80px;
+}
+
+.homepage-container > h2 {
+  font-size: 45px;
+}

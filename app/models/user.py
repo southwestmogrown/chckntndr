@@ -51,9 +51,9 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def to_dict(self):
+    def to_dict(self, from_self=False):
         return {
             'id': self.id,
             'username': self.username,
-            'friends': [friend.id for friend in self.user_friend_list]
+            'friends': [friend.id if from_self else friend.to_dict(True) for friend in self.user_friend_list]
         }

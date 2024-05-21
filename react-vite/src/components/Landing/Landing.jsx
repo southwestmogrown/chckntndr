@@ -13,14 +13,16 @@ function Landing() {
 
       <h1>Welcome to ChknTndr!</h1>
       <h2>A fun new way to find a place to eat with your friends and loved ones.</h2>
-      <OpenModalButton
-        buttonText="Log In"
-        modalComponent={<LoginFormModal />}
-      />
-      <OpenModalButton
-        buttonText="Signup"
-        modalComponent={<SignupFormModal />}
-      />
+      <div className='btn-container'>
+        <OpenModalButton
+          buttonText="Log In"
+          modalComponent={<LoginFormModal />}
+        />
+        <OpenModalButton
+          buttonText="Signup"
+          modalComponent={<SignupFormModal />}
+        />
+      </div>
     </div>
   )
 }

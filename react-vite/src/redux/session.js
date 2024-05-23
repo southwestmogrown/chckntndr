@@ -63,14 +63,28 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
-const initialState = { user: null };
+export const thunkRemoveFriend = (id) => async (dispatch) => {
+  const res = await fetch(`/api/friends/${id}/remove`)
+
+  if (res.ok) {
+    const updatedUser = await res.json()
+    await dispatch(setUser(updatedUser));
+    return updatedUser;
+  } else {
+    const errors = await res.json()
+    return errors;
+  }
+}
+
+const initialState = { user: null, friends: [] };
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      return { ...state, user: action.payload };
+      console.log(action.payload)
+      return { ...state, user: action.payload, friends: [...action.payload.friends] };
     case REMOVE_USER:
-      return { ...state, user: null };
+      return { ...state, user: null, friends: [] };
     default:
       return state;
   }

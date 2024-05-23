@@ -57,3 +57,13 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'friends': [friend.id if from_self else friend.to_dict(True) for friend in self.user_friend_list]
         }
+    
+    def add_friend(self, friend):
+        if not friend in self.user_friend_list:
+            self.user_friend_list.append(friend)
+        return self.user_friend_list
+    
+    def remove_friend(self, friend):
+        if friend in self.user_friend_list:
+            self.user_friend_list.remove(friend)
+        return self.user_friend_list

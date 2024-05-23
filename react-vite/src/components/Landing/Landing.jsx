@@ -1,13 +1,22 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+
 import LoginFormModal from '../LoginFormModal'
 import OpenModalButton from '../OpenModalButton'
 import SignupFormModal from '../SignupFormModal'
 import "./Landing.css"
-import { Navigate } from 'react-router-dom'
+import { thunkAuthenticate } from '../../redux/session'
 
 function Landing() {
+  const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user)
+  useEffect(() => {
+    dispatch(thunkAuthenticate());
+  }, [dispatch]);
+
   if (sessionUser) return <Navigate to='/home' replace={ true }/>
+
   return (
     <div className="landing-container">
 

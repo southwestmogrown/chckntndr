@@ -1,15 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useDispatch } from "react-redux";
 import { thunkLogout } from "../../redux/session";
 
 function Navigation() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const onLogout = async (e) => {
     e.preventDefault()
 
     await dispatch(thunkLogout())
+    navigate('/')
   }
   return (
     <header className="navbar-container">

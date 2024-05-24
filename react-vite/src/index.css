@@ -1,1 +1,18 @@
 /* TODO: Add sitewide styles */
+:root {
+  --primary-red: rgb(231, 3, 49);
+  --secondary-red: rgba(136, 4, 30, 0.795);
+  --primary-yellow: rgb(240, 174, 7);
+  --secondary-yellow: rgba(240, 194, 79, 0.842);
+
+}
+
+@font-face {
+  font-family: Caveat;
+  src: url('../Caveat-VariableFont_wght.ttf');
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}

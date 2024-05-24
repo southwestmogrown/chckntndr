@@ -6,7 +6,9 @@ friends = db.Table(
     "friends",
     db.Model.metadata,
     db.Column("user_id", db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
-    db.Column("friend_id", db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
+    db.Column("friend_id", db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column("requested", db.Integer, nullable=False, default=1),
+    db.Column("approved", db.Integer, nullable=False, default=0)
 )
 
 if environment == 'production':

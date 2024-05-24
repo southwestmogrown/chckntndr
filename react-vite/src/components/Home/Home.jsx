@@ -1,9 +1,8 @@
 import { Navigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import "./Home.css"
-import { thunkRemoveFriend } from "../../redux/session"
+import { thunkRemoveFriend, thunkLoadFriends } from "../../redux/session"
 import { useEffect } from "react"
-import { thunkLoadFriends } from "../../redux/friends"
 import PendingInvites from "./PendingInvites"
 import PendingRequests from "./PendingRequests"
 import UserFriends from "./UserFriends"
@@ -11,8 +10,6 @@ import UserFriends from "./UserFriends"
 function Home() {
   const dispatch = useDispatch()
   const sessionUser = useSelector(state => state.session.user)
-  const friends = useSelector(state => state.session.user?.friends)
-  const availableFriends = useSelector(state => state.friends.availableFriends)
 
 
 
@@ -37,12 +34,9 @@ function Home() {
           handleClick={removeFriend}
         />
         <PendingInvites 
-          availableFriends={availableFriends} 
           handleClick={removeFriend} 
         />
-        <PendingRequests 
-          friends={friends} 
-          sessionUser={sessionUser} 
+        <PendingRequests  
           handleClick={removeFriend} 
         />
       </div>

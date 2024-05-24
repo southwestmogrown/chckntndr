@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux"
 import "./Home.css"
 
-function PendingRequests({friends, sessionUser, handleClick}) {
+function PendingRequests({ handleClick }) {
+  const sessionUser = useSelector(state => state.session.user)
+  const friends = useSelector(state => state.session?.user?.friends)
 
   const findApprovalForRequestsSent = (friend) => {
     const req = friend.requests.find(req => req.current_user === friend.id && req.inviting_user === sessionUser.id)
@@ -8,7 +11,7 @@ function PendingRequests({friends, sessionUser, handleClick}) {
   }
 
   return (
-    <div className="pending-requests-container">
+    friends && <div className="pending-requests-container">
       <h2>Pending Friend Requests</h2>
       {friends.length > 0 && friends?.map(friend => (
         <div key={friend.id} className="friend-card">

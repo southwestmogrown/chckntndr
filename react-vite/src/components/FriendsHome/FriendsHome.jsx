@@ -1,13 +1,14 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import "./FriendsHome.css"
-import { thunkAddFriend, thunkLoadFriends } from "../../redux/friends"
+import { thunkAddFriend, thunkLoadFriends } from "../../redux/session"
 
 function FriendsHome() {
   const dispatch = useDispatch();
-
-  let friends = useSelector(state => state.friends.availableFriends);
+  let friends = useSelector(state => state.session.availableFriends);
   friends = Object.values(friends);
+
+  
 
   useEffect(() => {
     dispatch(thunkLoadFriends())

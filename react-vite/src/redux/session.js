@@ -76,15 +76,27 @@ export const thunkRemoveFriend = (id) => async (dispatch) => {
   }
 }
 
-const initialState = { user: null, friends: [] };
+export const thunkAcceptFriend = (id) => async (dispatch) => {
+  const res = await fetch(`/api/friends/${id}/accept`)
+
+  if (res.ok) {
+    const user = await res.json();
+    dispatch(setUser(user));
+    return user;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+}
+
+const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      console.log(action.payload)
-      return { ...state, user: action.payload, friends: [...action.payload.friends] };
+      return { ...state, user: action.payload };
     case REMOVE_USER:
-      return { ...state, user: null, friends: [] };
+      return { ...state, user: null };
     default:
       return state;
   }

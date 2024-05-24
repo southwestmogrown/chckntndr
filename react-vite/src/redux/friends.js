@@ -36,6 +36,16 @@ export const thunkAddFriend = (id) => async (dispatch) => {
   }
 }
 
+// export const thunkAcceptFriend = (id) => async (dispatch) => {
+//   console.log(id)
+//   const res = await fetch(`/api/friends/${id}/accept`)
+
+//   if (res.ok) {
+//     const data = await res.json()
+//     console.log(data)
+//   }
+// }
+
 
 const initialState = { availableFriends: {} }
 

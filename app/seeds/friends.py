@@ -8,11 +8,10 @@ def seed_friends():
   marnie = User.query.get(2)
   bobbie = User.query.get(3)
 
-  demo.user_friend_list.append(marnie)
-  demo.user_friend_list.append(bobbie)
-  marnie.user_friend_list.append(demo)
-  bobbie.user_friend_list.append(demo)
-  # print(demo.friends)
+  # demo.user_friend_list.append(marnie)
+  # demo.user_friend_list.append(bobbie)
+  # marnie.user_friend_list.append(demo)
+  # bobbie.user_friend_list.append(demo)
   db.session.commit()
 
 

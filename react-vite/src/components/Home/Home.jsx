@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import PendingInvites from "./PendingInvites"
 import PendingRequests from "./PendingRequests"
 import UserFriends from "./UserFriends"
+import GroupChat from "../GroupChat"
 
 function Home() {
   const dispatch = useDispatch()
@@ -33,6 +34,7 @@ function Home() {
         <UserFriends 
           handleClick={removeFriend}
         />
+        <GroupChat />
         <PendingInvites 
           handleClick={removeFriend} 
         />

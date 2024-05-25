@@ -12,16 +12,21 @@ export default function ChatProvider(props) {
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState([]);
   const user = useSelector(state => state.session?.user);
+  const serverUrl = useSelector(state => state.session.serverUrl)
 
   useEffect(() => {
     // open socket connection
     // create websocket
-    socket = io("localhost:8000/", {
-      transports: ["websocket"],
-      cors: {
-        origin: "http://localhost:5173/",
-      }
-    })
+    if (import.meta.env.MODE !== "production") {
+      socket = io("http://localhost:8000/", {
+        transports: ["websocket"],
+        cors: {
+          origin: "http://localhost:5173/",
+        }
+      })
+    } else {
+      socket = io(serverUrl)
+    }
 
     
     socket.on("chat", (chat) => {

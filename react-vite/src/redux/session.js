@@ -2,9 +2,9 @@ const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const LOAD_AVAILABLE_FRIENDS = "friends/LOAD_AVAILABLE_FRIENDS"
 
-const setUser = (user) => ({
+const setUser = (user, serverUrl) => ({
   type: SET_USER,
-  payload: user
+  payload: {user, serverUrl}
 });
 
 const removeUser = () => ({
@@ -17,29 +17,25 @@ const loadFriends = (friends) => ({
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
-
-		dispatch(setUser(data));
+	const res = await fetch("/api/auth/");
+	if (res.ok) {
+    const { user, serverUrl } = await res.json()
+		dispatch(setUser(user, serverUrl));
 	}
 };
 
 export const thunkLogin = (credentials) => async dispatch => {
-  const response = await fetch("/api/auth/login", {
+  const res = await fetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials)
   });
 
-  if(response.ok) {
-    const data = await response.json();
+  if(res.ok) {
+    const data = await res.json();
     dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
     return errorMessages
   } else {
     return { server: "Something went wrong. Please try again" }
@@ -47,17 +43,17 @@ export const thunkLogin = (credentials) => async dispatch => {
 };
 
 export const thunkSignup = (user) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
+  const res = await fetch("/api/auth/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user)
   });
 
-  if(response.ok) {
-    const data = await response.json();
+  if(res.ok) {
+    const data = await res.json();
     dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
     return errorMessages
   } else {
     return { server: "Something went wrong. Please try again" }
@@ -134,15 +130,19 @@ const initialState = { user: null, availableFriends: {}, pendingInvites: {} };
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      return { ...state, user: action.payload };
+      return { 
+        ...state, 
+        user: action.payload.user, 
+        serverUrl: action.payload.serverUrl 
+      };
     case REMOVE_USER:
       return { ...state, user: null };
-      case LOAD_AVAILABLE_FRIENDS:
-        return { 
-          ...state, 
-          availableFriends: { ...action.friends.users}, 
-          pendingInvites: {...action.friends.pendingInvites}
-        }
+    case LOAD_AVAILABLE_FRIENDS:
+      return { 
+        ...state, 
+        availableFriends: { ...action.friends.users}, 
+        pendingInvites: {...action.friends.pendingInvites}
+      }
     default:
       return state;
   }

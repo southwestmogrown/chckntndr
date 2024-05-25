@@ -33,10 +33,10 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(friend_routes, url_prefix='/api/friends')
 db.init_app(app)
 Migrate(app, db)
-socketio.init_app(app)
 
 # Application Security
 CORS(app)
+socketio.init_app(app)
 
 
 # Since we are deploying with Docker and Flask,
@@ -95,5 +95,4 @@ def not_found(e):
     return app.send_static_file('index.html')
 
 if __name__ == '__main__':
-    print('here')
     socketio.run(app)

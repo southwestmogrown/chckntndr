@@ -4,6 +4,7 @@ from sqlalchemy import or_
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+import os
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -13,10 +14,13 @@ def authenticate():
     """
     Authenticates a user.
     """
-            
+    server_url = os.environ.get("SERVER_URL")
 
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        return { 
+            "user": current_user.to_dict(),
+            "serverUrl": server_url    
+        }
     return {'errors': {'message': 'Unauthorized'}}, 401
 
 

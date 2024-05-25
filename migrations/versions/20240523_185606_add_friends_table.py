@@ -1,8 +1,8 @@
 """add friends table
 
-Revision ID: 664bce05aca6
+Revision ID: 1994517c1bcd
 Revises: ffdc0a98111c
-Create Date: 2024-05-20 12:22:01.916550
+Create Date: 2024-05-23 18:56:06.018910
 
 """
 from alembic import op
@@ -12,9 +12,8 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
-
 # revision identifiers, used by Alembic.
-revision = '664bce05aca6'
+revision = '1994517c1bcd'
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -25,6 +24,8 @@ def upgrade():
     op.create_table('friends',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('friend_id', sa.Integer(), nullable=False),
+    sa.Column('requested', sa.Integer(), nullable=False, server_default='1'),
+    sa.Column('approved', sa.Integer(), nullable=False, server_default='0'),
     sa.ForeignKeyConstraint(['friend_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'friend_id')

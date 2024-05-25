@@ -18,3 +18,9 @@ body {
 .homepage-container > h2 {
   font-size: 45px;
 }
+
+.friendships-container {
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+}

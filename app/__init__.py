@@ -10,6 +10,7 @@ from .api.auth_routes import auth_routes
 from .api.friend_routes import friend_routes
 from .seeds import seed_commands
 from .config import Config
+from .socket import socketio
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
 
@@ -32,6 +33,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(friend_routes, url_prefix='/api/friends')
 db.init_app(app)
 Migrate(app, db)
+socketio.init_app(app)
 
 # Application Security
 CORS(app)
@@ -91,3 +93,7 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+if __name__ == '__main__':
+    print('here')
+    socketio.run(app)

@@ -7,6 +7,7 @@ import { router } from "./router";
 import * as sessionActions from "./redux/session";
 import "./index.css";
 import { Modal, ModalProvider } from "./context/Modal";
+import ChatProvider from "./context/Chat";
 
 const store = configureStore();
 
@@ -19,8 +20,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
       <ModalProvider>
-        <RouterProvider router={router} />
-        <Modal />
+        <ChatProvider>
+          <RouterProvider router={router} />
+          <Modal />
+        </ChatProvider>
       </ModalProvider>
     </ReduxProvider>
   </React.StrictMode>

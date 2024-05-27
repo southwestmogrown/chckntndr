@@ -12,9 +12,7 @@ import { thunkAuthenticate } from '../../redux/session'
 function Landing() {
   const dispatch = useDispatch();
   const theme = useTheme()
-  const sm = useMediaQuery(theme.breakpoints.down('sm'))
   const md = useMediaQuery(theme.breakpoints.down('md'))
-  const lg = useMediaQuery(theme.breakpoints.down('lg'))
 
   const sessionUser = useSelector(state => state.session.user)
   useEffect(() => {
@@ -55,6 +53,9 @@ function Landing() {
           [theme.breakpoints.down("lg")]: {
             fontSize: "64px"
           },
+          [theme.breakpoints.up("lg")]: {
+            fontSize: "68px"
+          },
         }}
       >
         Welcome to ChknTndr!
@@ -71,7 +72,7 @@ function Landing() {
             height: "300px"
           },
           [theme.breakpoints.up("lg")]: {
-            height: "350px"
+            height: "350px",
           },
         }}
       />

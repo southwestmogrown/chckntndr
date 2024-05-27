@@ -23,9 +23,10 @@ function OpenModalButton({
 
   return  <Button 
             size={sm ? 'small' : md ? "medium" : 'large'}
+
             variant='contained'
             onClick={onClick}
-            sx={{ marginRight: md ? "0.5rem" : 0}}
+            sx={{ color: "primary.text", marginRight: md ? "0.5rem" : 0}}
             style={{fontSize: sm ? "1rem" : md ? "1.2" : lg ? "1.5rem" : "2rem"}}
           >{buttonText}
          </Button>;

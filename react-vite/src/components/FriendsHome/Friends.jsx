@@ -56,6 +56,7 @@ function Friends() {
           alignItems: "center",
           marginTop: "5%",
           width: "40%",
+          minHeight: "400px",
           maxHeight: "400px",
           overflowY: "scroll",
           overflowX: "none",

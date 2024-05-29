@@ -1,3 +1,3 @@
-import FriendsHome from "./FriendsHome";
+import Friends from "./Friends";
 
-export default FriendsHome;
+export default Friends;

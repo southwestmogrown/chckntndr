@@ -8,6 +8,9 @@ import * as sessionActions from "./redux/session";
 import "./index.css";
 import { Modal, ModalProvider } from "./context/Modal";
 import ChatProvider from "./context/Chat";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
+import theme from "./theme";
 
 const store = configureStore();
 
@@ -21,8 +24,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ReduxProvider store={store}>
       <ModalProvider>
         <ChatProvider>
-          <RouterProvider router={router} />
-          <Modal />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <RouterProvider router={router} />
+            <Modal />
+          </ThemeProvider>
         </ChatProvider>
       </ModalProvider>
     </ReduxProvider>

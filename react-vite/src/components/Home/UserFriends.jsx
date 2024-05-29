@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux"
 import "./Home.css"
+import { Container, Typography } from "@mui/material";
+import FriendCard from "../FriendsHome/FriendCard";
+import { useTheme } from "@emotion/react";
 
-function UserFriends({ handleClick}) {
+function UserFriends() {
+  const theme = useTheme()
   const sessionUser = useSelector(state => state.session.user);
   const friends = useSelector(state => state.session.user.friends);
 
@@ -10,20 +14,32 @@ function UserFriends({ handleClick}) {
     return req.approved
   }
   return (
-    friends && <div>
-      <h2>Friends</h2>
+    friends && <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "5%",
+        width: "40%",
+        minHeight: "400px",
+        overflowY: "scroll",
+        overflowX: "none",
+        borderBottom: "5px solid gray",
+        [theme.breakpoints.down("sm")]: {
+          width: "100%",
+          height: "100%",
+        }
+      }}
+    >
+      <Typography variant="h3" sx={{color: "secondary.main"}}>Friends</Typography>
       {friends.map(friend => (
-        <div key={friend.id} className="friend-card">
+        <>
           { findApprovalForRequestsSent(friend) !== 0 &&
-            <>
-              <h2>{friend.username}</h2>
-              <button>Add to Party</button>
-              <button onClick={(e) => handleClick(e, friend.id)}>Remove Friend</button>
-            </>
+            <FriendCard friend={friend} /> 
           }
-        </div>
+        </>
       ))}
-    </div>
+    </Container>
   )
 }
 

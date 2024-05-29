@@ -1,11 +1,28 @@
 /* TODO: Add sitewide styles */
 :root {
-  --primary-red: rgb(231, 3, 49);
-  --secondary-red: rgba(136, 4, 30, 0.795);
-  --primary-yellow: rgb(240, 174, 7);
-  --secondary-yellow: rgba(240, 194, 79, 0.842);
+  --primary-red: #e70331;
+  --secondary-red: #88041ecb;
+  --primary-yellow: #f0ae07;
+  --secondary-yellow: #f0c24fd7;
 
 }
+
+
+#root {
+  background-color: var(--secondary-red);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 
 @font-face {
   font-family: Caveat;
@@ -14,5 +31,9 @@
 
 * {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

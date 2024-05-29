@@ -30,9 +30,9 @@ def available_friends():
     and user not in pending_invites
   }
          
-  return { "users": users, "pendingInvites": invite_requests }
+  return { "user": current_user.to_dict(), "users": users, "pendingInvites": invite_requests }
 
-@friend_routes.route('/<int:id>/add', methods=["POST"])
+@friend_routes.route('/<int:id>/add')
 @login_required
 def add_friend(id):
   users = User.query.all()
@@ -57,7 +57,7 @@ def add_friend(id):
     and user.id != current_user.id
     and user not in pending_invites
   }
-
+  print(current_user)
   return {
     "user": current_user.to_dict(),
     "users": users,

@@ -90,6 +90,7 @@ function SignupFormModal() {
       />
       {errors.username && <p>{errors.username}</p>}
       <Input 
+        type="password"
         onChange={(e) => setPassword(e.target.value)} 
         placeholder="Password" inputProps={ariaLabel} 
         value={password}
@@ -98,6 +99,7 @@ function SignupFormModal() {
       />
       {errors.password && <p>{errors.password}</p>}
       <Input 
+        type="password"
         onChange={(e) => setConfirmPassword(e.target.value)} 
         placeholder="Confirm Password" inputProps={ariaLabel} 
         value={confirmPassword}

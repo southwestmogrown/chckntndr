@@ -65,9 +65,6 @@ function Landing() {
         src="../../chkntndr-landing.png"
         alt="ChknTndr landing rooster image"
         sx={{
-          [theme.breakpoints.down("md")]: {
-            height: "300px"
-          },
           [theme.breakpoints.down("lg")]: {
             height: "300px"
           },

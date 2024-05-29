@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux"
 import "./Home.css"
+import { Container, Typography } from "@mui/material"
+import { useTheme } from "@emotion/react"
+import FriendCard from "../FriendsHome/FriendCard"
 
-function PendingRequests({ handleClick }) {
+function PendingRequests() {
+  const theme = useTheme()
   const sessionUser = useSelector(state => state.session.user)
   const friends = useSelector(state => state.session?.user?.friends)
 
@@ -11,21 +15,33 @@ function PendingRequests({ handleClick }) {
   }
 
   return (
-    friends && <div className="pending-requests-container">
-      <h2>Pending Friend Requests</h2>
+    friends && <Container 
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "5%",
+        width: "40%",
+        minHeight: "400px",
+        overflowY: "scroll",
+        overflowX: "none",
+        borderBottom: "5px solid gray",
+        [theme.breakpoints.down("sm")]: {
+          width: "100%",
+          height: "100%",
+        }
+      }}
+    >
+      <Typography variant="h3" sx={{color: "secondary.main"}}>Pending Requests</Typography>
       {friends.length > 0 && friends?.map(friend => (
-        <div key={friend.id} className="friend-card">
+        <>
           {
             findApprovalForRequestsSent(friend) === 0 &&
-            <>
-              <h2>{friend?.username}</h2>
-              <h3>Pending...</h3>
-              <button onClick={(e) => handleClick(e, friend.id)}>Cancel Request</button>
-            </>
+            <FriendCard friend={friend} />
           }  
-        </div>    
+        </>    
       ))}
-    </div>
+    </Container>
   )
 }
 

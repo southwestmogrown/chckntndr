@@ -1,31 +1,37 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import "./Home.css"
-import { thunkAcceptFriend } from "../../redux/session"
+import { useTheme } from "@emotion/react"
+import { Container, Typography } from "@mui/material"
+import FriendCard from "../FriendsHome/FriendCard"
 
-function PendingInvites({ handleClick }) {
-  const dispatch = useDispatch()
+function PendingInvites() {
+  const theme = useTheme()
   const pendingInvites = useSelector(state => state.session.pendingInvites)
   const pendingArr = Object.values(pendingInvites)
 
-  const handleAccept = (e, friend_id) => {
-    e.preventDefault()
-    console.log(friend_id)
-    dispatch(thunkAcceptFriend(friend_id))
-  }
-
   return (
-    <div className="pending-invites-container">
-      <h2>Pending Invitations</h2>
+    <Container 
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "5%",
+        width: "40%",
+        minHeight: "400px",
+        overflowY: "scroll",
+        overflowX: "none",
+        borderBottom: "5px solid gray",
+        [theme.breakpoints.down("sm")]: {
+          width: "100%",
+          height: "100%",
+        }
+      }}
+    >
+      <Typography variant="h3" sx={{color: "secondary.main"}}>Pending Invitations</Typography>
       {pendingArr.length > 0 && pendingArr.map(friend => (
-        <div key={friend.id} className="friend-card">
-            <>
-            <h2>{friend.username}</h2>
-            <button onClick={(e) => handleAccept(e, friend.id)}>Accept</button>
-            <button onClick={(e) => handleClick(e, friend.id)}>Decline</button>
-            </>
-        </div>
+        <FriendCard key={friend.id} friend={friend} />
       ))}
-    </div>
+    </Container>
   )
 }
 

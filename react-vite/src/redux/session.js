@@ -11,9 +11,9 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-const loadFriends = (friends) => ({
+const loadFriends = (payload) => ({
   type: LOAD_AVAILABLE_FRIENDS,
-  friends
+  payload: payload
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -69,28 +69,23 @@ export const thunkLoadFriends = () => async (dispatch) => {
   const res = await fetch('/api/friends')
 
   if (res.ok) {
-    const friends = await res.json();
-    console.log(friends)
-    await dispatch(loadFriends(friends))
-    return friends
+    const payload = await res.json();
+    console.log(payload)
+    await dispatch(loadFriends(payload))
+    return payload
   } else {
     return res
   }
 }
 
 export const thunkAddFriend = (id) => async (dispatch) => {
-  const res = await fetch(`/api/friends/${id}/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(id)
-  });
+  const res = await fetch(`/api/friends/${id}/add`);
 
   if (res.ok) {
-    const updatedFriends = await res.json()
-    await dispatch(loadFriends(updatedFriends))
-    return updatedFriends
+    const payload = await res.json()
+    console.log("payload +++++++++++++++++++++++++++++++++ ", payload)
+    await dispatch(loadFriends(payload))
+    return payload
   } else {
     const errors = await res.json()
     return errors
@@ -102,8 +97,7 @@ export const thunkRemoveFriend = (id) => async (dispatch) => {
 
   if (res.ok) {
     const {user, users, pendingInvites} = await res.json()
-    await dispatch(setUser(user));
-    await dispatch(loadFriends({users, pendingInvites}))
+    await dispatch(loadFriends({user, users, pendingInvites}))
     return user;
   } else {
     const errors = await res.json()
@@ -116,8 +110,7 @@ export const thunkAcceptFriend = (id) => async (dispatch) => {
 
   if (res.ok) {
     const {user, users, pendingInvites} = await res.json();
-    dispatch(setUser(user));
-    dispatch(loadFriends({users, pendingInvites}))
+    dispatch(loadFriends({user, users, pendingInvites}))
     return user;
   } else {
     const errors = await res.json();
@@ -139,9 +132,10 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: null };
     case LOAD_AVAILABLE_FRIENDS:
       return { 
-        ...state, 
-        availableFriends: { ...action.friends.users}, 
-        pendingInvites: {...action.friends.pendingInvites}
+        ...state,
+        user: { ...action.payload.user }, 
+        availableFriends: { ...action.payload.users}, 
+        pendingInvites: {...action.payload.pendingInvites}
       }
     default:
       return state;

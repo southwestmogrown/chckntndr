@@ -2,7 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { Box, Button, Input, Typography, useMediaQuery } from "@mui/material"
+import { Box, Button, Container, Input, Typography, useMediaQuery } from "@mui/material"
 import "./LoginForm.css";
 import OpenModalLink from "../OpenModalLink";
 import SignupFormModal from "../SignupFormModal";
@@ -38,6 +38,23 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemo = async (e) => {
+    e.preventDefault()
+
+    const serverResponse = await dispatch(
+      thunkLogin({
+        email: "demo@aa.io",
+        password: "password",
+      })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -72,6 +89,7 @@ function LoginFormModal() {
       />
       {errors.email && <p>{errors.email}</p>}
       <Input 
+        type="password"
         onChange={(e) => setPassword(e.target.value)} 
         placeholder="Password" inputProps={ariaLabel} 
         value={password}
@@ -79,46 +97,37 @@ function LoginFormModal() {
         required
       />
       {errors.password && <p>{errors.password}</p>}
-      <Button 
-        onClick={handleSubmit} 
-        variant="contained"
-        type="submit"
-        size="sm"
-        sx={{ color: "primary.text"}}
-        style={{fontSize: sm ? "0.7rem" : md ? "0.75rem" : lg ? "1rem" : "1.2rem"}}
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "space-around"
+        }}
       >
-        Login
-      </Button>
+        <Button 
+          onClick={handleSubmit} 
+          variant="contained"
+          type="submit"
+          size="sm"
+          sx={{ color: "primary.text"}}
+          style={{fontSize: sm ? "0.7rem" : md ? "0.75rem" : lg ? "1rem" : "1.2rem"}}
+        >
+          Login
+        </Button>
+        <Button 
+          onClick={handleDemo} 
+          variant="contained"
+          type="submit"
+          size="sm"
+          sx={{ color: "primary.text"}}
+          style={{fontSize: sm ? "0.7rem" : md ? "0.75rem" : lg ? "1rem" : "1.2rem"}}
+        >
+          Demo
+        </Button>
+      </Container>
       <Typography variant="subtitle1">
         Don&apos;t have an account? <OpenModalLink linkText="Sign Up Now" modalComponent={<SignupFormModal />} />
       </Typography>
     </Box>
-    // <div className="login-container">
-    //   <h1>Log In</h1>
-    //   <form className="login-form" onSubmit={handleSubmit}>
-    //     <div className="input-container">
-    //       <label>Email</label>
-    //       <input
-    //         type="text"
-    //         value={email}
-    //         onChange={(e) => setEmail(e.target.value)}
-    //         required
-    //       />
-    //       {errors.email && <p>{errors.email}</p>}
-    //     </div>
-    //     <div className="input-container">
-    //       <label>Password</label>
-    //       <input
-    //         type="password"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //         required
-    //       />
-    //       {errors.password && <p>{errors.password}</p>}
-    //     </div>
-    //     <button className="login-btn" type="submit">Log In</button>
-    //   </form>
-    // </div>
   );
 }
 
